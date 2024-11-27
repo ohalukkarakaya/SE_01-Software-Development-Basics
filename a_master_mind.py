@@ -1,45 +1,58 @@
 import random
 
-def a_master_mind():
-    try_right = 12
+def generate_rand_code():
+    return [random.randint(1,6) for i in range(4)]
 
+
+def count_matching_members(code, guess):
+    str_code = str(code)
+    str_guess = str(guess)
+
+    matching_count = 0
+    for element in str_code:
+        if element in str_guess:
+            matching_count += 1
+
+    return matching_count
+
+def a_master_mind():
+
+    try_right = 12
     remained_try_right = try_right
 
     # generate rand code:
-    code = [random.randint(1,6) for i in range(4)]
-
+    code = generate_rand_code()
     int_code = int("".join(map(str, code)))
 
-    # print(code)
+    print(code)
 
     # main loop
     for try_right in range(1, try_right + 1):
 
         is_win = None
+        guess = input("Enter your guess as int: ")
+        guess = [int(digit) for digit in str(guess)] # prepare it for zip()
 
-        # logic
-        guess = input("Enter your guess as int: ") #temprorary, we will change it to user input later
-        guess = [int(digit) for digit in str(guess)]
+        corretct_known_values = []
 
-        correct_guess_counter = 0
-
-        # check if it is correct letter by letter
+        # check if it is correct leter by leter
         for char_code, char_guess in zip(code, guess):
             is_correct = char_code == char_guess;
 
             if is_correct :
-                correct_guess_counter += 1
+                corretct_known_values.append(char_guess)
+
+        # prepare second hint
+
+        second_hint = count_matching_members(int_code, guess) - len(corretct_known_values)
 
         # check if it is a win
-        if correct_guess_counter == 4:
-            correct_guess_counter = 0
+        if len(corretct_known_values) == 4:
             print("You won!! 🎉")
             is_win = True
             break
         else :
-            print(correct_guess_counter)
-            correct_guess_counter = 0
-
+            print(f"first hint: {len(corretct_known_values)}, second hint: {second_hint}")
             remained_try_right -= 1
         
         if remained_try_right <= 0:
