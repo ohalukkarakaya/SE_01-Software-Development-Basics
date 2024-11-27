@@ -53,7 +53,7 @@ def a_master_mind_code_maker():
     remained_try_right = try_right
 
     # generate rand code:
-    code = generate_rand_code(4)
+    code = generate_rand_code()
     int_code = int("".join(map(str, code)))
 
     # main loop
@@ -88,24 +88,29 @@ def a_master_mind_code_maker():
 def a_master_mind_code_breaker(code):
     try_right = 12
 
+    # generate all possible guesses
     guesses = generate_guess()
 
+    # main loop
     for trying in range(1, try_right + 1):
 
+        # decide on one guess
         guess = random.choice(guesses)
+        print(f"tryed guess: {guess}")
 
+        # if guess is correct
         if guess == code:
-            print(f"found right value: {int_guess}")
+            print(f"found right value: {int_guess} 🎉")
             break
 
+        # get hints
         first_hint, second_hint = generate_hints(code, guess)
 
+        # filter guesses
         guesses = [
             guess for guess in guesses
             if generate_hints(code, guess) == (first_hint, second_hint)
         ]
-
-        print(f"trying guess: {guess}")
 
     print(f"failed, code: {code}")
 
@@ -113,6 +118,5 @@ def a_master_mind_code_breaker(code):
 
         
 code = generate_rand_code()
-print(code)
 
-a_master_mind_code_breaker(code)
+a_master_mind_code_maker()
