@@ -119,4 +119,4 @@ def a_master_mind_code_breaker(code):
         
 code = generate_rand_code()
 
-a_master_mind_code_maker()
+a_master_mind_code_breaker(code)
