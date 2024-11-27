@@ -100,7 +100,7 @@ def a_master_mind_code_breaker(code):
 
         # if guess is correct
         if guess == code:
-            print(f"found right value: {int_guess} 🎉")
+            print(f"found right value: {guess} 🎉")
             break
 
         # get hints
